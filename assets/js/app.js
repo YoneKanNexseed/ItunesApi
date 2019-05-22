@@ -1,4 +1,10 @@
+let template = null;
+
 $(function() {
+
+  $.get("../../card.html", function(temp) {
+    template = $(temp);
+  })
 
   $('#search-btn').on('click', function() {
     // 検索ボタンがクリックされたら
@@ -18,10 +24,15 @@ $(function() {
       }
     }).done( (data) => {
       // 通信成功した時
-      console.log(data.results[0].collectionName);
+      $('#result').empty();
 
       for (item of data.results) {
-        console.log(item.collectionName);
+        let card = template.clone();
+        card.find('img').attr('src', item.artworkUrl100);
+        card.find('h5').text(item.collectionName);
+        card.find('a').attr('href', item.collectionViewUrl);
+        
+        $('#result').append(card);
       }
 
     }).fail((error) => {
