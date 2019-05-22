@@ -26,6 +26,11 @@ $(function() {
       // 通信成功した時
       $('#result').empty();
 
+      if (data.results.length == 0) {
+        $('#result').append($('<p>0件</p>'));
+        return;
+      }
+
       for (item of data.results) {
         let card = template.clone();
         card.find('img').attr('src', item.artworkUrl100);
