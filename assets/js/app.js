@@ -12,6 +12,9 @@ $(function() {
     // 検索ワードを取得する
     let searchWord = $('#search-word').val();
 
+    // メディア設定取得
+    let media = $('#media').text();
+
     // itunesに曲の検索をしに行く(Ajax)
     $.ajax({
       // データの通信をするところ
@@ -21,8 +24,10 @@ $(function() {
       data: {
         term: searchWord,
         country: 'jp',
+        media: media,
       }
     }).done( (data) => {
+      console.log(data);
       // 通信成功した時
       $('#result').empty();
 
@@ -44,5 +49,10 @@ $(function() {
       // 通信失敗した時
       console.log(error);
     })
-  })
+  });
+
+  $('.dropdown-item').on('click', function() {
+    let value = $(this).text();
+    $('#media').text(value);
+  });
 })
